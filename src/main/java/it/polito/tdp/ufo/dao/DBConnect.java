@@ -1,4 +1,4 @@
-package it.polito.tdp.gosales.dao;
+package it.polito.tdp.ufo.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DBConnect {
 
-	private static String jdbcURL = "jdbc:mysql://localhost/go_sales";
+	private static String jdbcURL = "jdbc:mysql://localhost/new_ufo_sightings";
 	private static HikariDataSource ds;
 
 	public static Connection getConnection() {

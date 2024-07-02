@@ -1,7 +1,7 @@
-package it.polito.tdp.gosales;
+package it.polito.tdp.ufo;
 
+import it.polito.tdp.ufo.model.Model;
 import javafx.application.Application;
-import it.polito.tdp.gosales.model.Model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
