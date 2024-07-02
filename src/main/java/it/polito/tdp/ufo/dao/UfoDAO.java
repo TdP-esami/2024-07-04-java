@@ -145,6 +145,47 @@ public class UfoDAO {
 			throw new RuntimeException("Error Connection Database");
 		}
 	}
+	
+	/**
+	 * Metodo per leggere la lista di tutti gli anni per cui ci sono avvistamenti registrati nel database
+	 * @return
+	 */
+	public List<Sighting> getVertici(int anno, String shape){
+		String query = "SELECT * "
+				+ "FROM sighting s "
+				+ "WHERE Year(s.datetime)=? AND s.shape =? "
+				+ "ORDER BY s.datetime  ASC";
+		List<Sighting> result = new ArrayList<Sighting>();
+
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(query);
+			st.setInt(1, anno);
+			st.setString(2, shape);
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				result.add(new Sighting(rs.getInt("id"), 
+						rs.getTimestamp("datetime").toLocalDateTime(),
+						rs.getString("city"), 
+						rs.getString("state"),
+						rs.getString("country"),
+						rs.getString("shape"),
+						rs.getInt("duration"),
+						rs.getString("duration_hm"),
+						rs.getString("comments"),
+						rs.getTimestamp("date_posted").toLocalDateTime().toLocalDate(),
+						rs.getDouble("latitude"),
+						rs.getDouble("longitude")));
+			}
+			conn.close();
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Errore connessione al database");
+			throw new RuntimeException("Error Connection Database");
+		}
+	}
 
 	
 }

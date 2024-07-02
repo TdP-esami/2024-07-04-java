@@ -45,7 +45,20 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	this.txtResult1.clear();
+    	Integer anno = this.cmbAnno.getValue();
+    	if (anno==null) {
+    		this.txtResult1.setText("Selezionare un anno\n");
+    		return;
+    	}
+    	String shape = this.cmbShape.getValue();
+    	if (shape==null) {
+    		this.txtResult1.setText("Selezionare una shape\n");
+    		return;
+    	}
+    	this.model.creaGrafo(anno, shape);
+    	this.txtResult1.appendText("Numero di vertici: "+ this.model.numNodi() +"\n");
+    	this.txtResult1.appendText("Numero di archi: "+ this.model.numArchi()+"\n");	
     }
 
     @FXML
