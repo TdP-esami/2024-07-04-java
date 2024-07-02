@@ -27,10 +27,10 @@ public class FXMLController {
     private Button btnPercorso;
 
     @FXML
-    private ComboBox<?> cmbAnno;
+    private ComboBox<Integer> cmbAnno;
 
     @FXML
-    private ComboBox<?> cmbShape;
+    private ComboBox<String> cmbShape;
 
     @FXML
     private TextArea txtResult1;
@@ -50,7 +50,10 @@ public class FXMLController {
 
     @FXML
     void fillCmbShape(ActionEvent event) {
-
+    	int anno = this.cmbAnno.getValue();
+    	this.cmbShape.getItems().clear(); 
+    	this.cmbShape.getItems().setAll(this.model.getShapesYear(anno));
+    	
     }
 
     @FXML
@@ -66,6 +69,7 @@ public class FXMLController {
     
     void setModel(Model model) {
     	this.model = model;
+    	this.cmbAnno.getItems().setAll(this.model.getYears());
     }
 
 }
