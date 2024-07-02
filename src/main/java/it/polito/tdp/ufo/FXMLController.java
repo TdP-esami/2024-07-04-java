@@ -43,7 +43,12 @@ public class FXMLController {
 
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
-
+    	this.txtResult2.clear();
+    	List<Sighting> percorsoOttimo = this.model.camminoOttimo();
+    	this.txtResult2.appendText("Il percorso ottimo è costituito da " + percorsoOttimo.size() + " nodi:\n");
+    	for (Sighting s : percorsoOttimo) {
+    		this.txtResult2.appendText(s + " - " + s.getDuration() + "\n");
+    	}
     }
 
     @FXML
@@ -69,7 +74,7 @@ public class FXMLController {
     	for (Sighting c : largestConnessa) {
     		this.txtResult1.appendText(c + "\n");
     	}
-    	
+    	this.btnPercorso.setDisable(false);
     }
 
     @FXML
@@ -94,6 +99,7 @@ public class FXMLController {
     void setModel(Model model) {
     	this.model = model;
     	this.cmbAnno.getItems().setAll(this.model.getYears());
+    	this.btnPercorso.setDisable(true);
     }
 
 }

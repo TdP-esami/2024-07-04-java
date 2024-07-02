@@ -1,5 +1,6 @@
 package it.polito.tdp.ufo.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,6 +80,50 @@ public class Model {
 		return this.grafo.edgeSet().size();
 	}
 		
+	
+	public List<Sighting> camminoOttimo(){
+		this.camminoOttimo = new ArrayList<Sighting>();
+		this.lunghezzaCamminoOttimo = 0;
+
+		for (Sighting s : this.grafo.vertexSet()) {
+			List<Sighting> successors = this.successoriAmmissibili(s);
+			List<Sighting> parziale = new ArrayList<Sighting>();
+			parziale.add(s);
+			this.ricorsioneCammino(parziale, successors);	
+		}
+		return this.camminoOttimo;
+	}
+	
+	private void ricorsioneCammino(List<Sighting> parziale, List<Sighting> successivi) {
+		if (successivi.size()==0) {
+			if (parziale.size()>this.lunghezzaCamminoOttimo) {
+				this.lunghezzaCamminoOttimo = parziale.size();
+				this.camminoOttimo = new ArrayList<Sighting>(parziale);
+			}
+			return;
+		}
+		else {
+			for (Sighting s: successivi) {
+				parziale.add(s);
+				// nuovi successivi
+				List<Sighting> nuovi_successivi = this.successoriAmmissibili(s);
+				this.ricorsioneCammino(parziale, nuovi_successivi);
+				parziale.remove(parziale.size()-1);
+			}
+ 		}
+	}
+	
+	
+	private List<Sighting> successoriAmmissibili(Sighting nodo){
+		List<Sighting> successors = Graphs.successorListOf(this.grafo, nodo);
+		List<Sighting> nuoviSuccessivi = new ArrayList<Sighting>();
+		for (Sighting s : successors) {
+			if (s.getDuration()> nodo.getDuration()) {
+				nuoviSuccessivi.add(s);
+			}
+		}
+		return nuoviSuccessivi;
+	}
 }
 	
 
