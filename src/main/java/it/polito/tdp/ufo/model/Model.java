@@ -1,9 +1,11 @@
 package it.polito.tdp.ufo.model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.Graphs;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
@@ -45,6 +47,25 @@ public class Model {
         }
 	}
 	
+	
+	public List<Set<Sighting>> calcolaComponentiConnesse(){
+		ConnectivityInspector<Sighting, DefaultEdge> inspect = new ConnectivityInspector<Sighting, DefaultEdge>(this.grafo);
+		return inspect.connectedSets();
+	}
+	
+	public Set<Sighting> getLargestConnessa(){
+		List<Set<Sighting>> connesse = this.calcolaComponentiConnesse();
+		int bestSize = 0;
+		Set<Sighting> res = new HashSet<Sighting>();
+		for (Set<Sighting> connessa : connesse) {
+			if (connessa.size()>bestSize){
+				bestSize = connessa.size();
+				res = new HashSet<Sighting>(connessa);
+			}
+		}
+		return res;
+	}
+
 	
 	public Set<Sighting> getNodi(){
 		return this.grafo.vertexSet();

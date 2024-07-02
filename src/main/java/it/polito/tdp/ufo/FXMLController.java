@@ -1,9 +1,12 @@
 package it.polito.tdp.ufo;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import it.polito.tdp.ufo.model.Model;
+import it.polito.tdp.ufo.model.Sighting;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -58,7 +61,15 @@ public class FXMLController {
     	}
     	this.model.creaGrafo(anno, shape);
     	this.txtResult1.appendText("Numero di vertici: "+ this.model.numNodi() +"\n");
-    	this.txtResult1.appendText("Numero di archi: "+ this.model.numArchi()+"\n");	
+    	this.txtResult1.appendText("Numero di archi: "+ this.model.numArchi()+"\n");
+    	List<Set<Sighting>> componentiConnesse = this.model.calcolaComponentiConnesse();
+    	this.txtResult1.appendText("Il grafo ha " + componentiConnesse.size() + " componenti connesse.\n");
+    	Set<Sighting> largestConnessa = this.model.getLargestConnessa();
+    	this.txtResult1.appendText("La componente connessa più grande è costituita da " + largestConnessa.size() + " nodi:\n");
+    	for (Sighting c : largestConnessa) {
+    		this.txtResult1.appendText(c + "\n");
+    	}
+    	
     }
 
     @FXML
