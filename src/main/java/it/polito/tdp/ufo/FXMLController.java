@@ -45,6 +45,7 @@ public class FXMLController {
     void doCalcolaPercorso(ActionEvent event) {
     	this.txtResult2.clear();
     	List<Sighting> percorsoOttimo = this.model.camminoOttimo();
+    	this.txtResult2.appendText("Il punteggio del percorso ottimo è " + this.model.punteggioOttimo() + "\n");
     	this.txtResult2.appendText("Il percorso ottimo è costituito da " + percorsoOttimo.size() + " nodi:\n");
     	for (Sighting s : percorsoOttimo) {
     		this.txtResult2.appendText(s + " - " + s.getDuration() + "\n");
